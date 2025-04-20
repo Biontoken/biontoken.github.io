@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HYUGA</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+      overflow-x: hidden;
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+      text-shadow: 0 0 8px #0f0;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 2em;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #0f0;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 12px #0f0;
+    }
+
+    .card h2 {
+      font-size: 2em;
+      margin-bottom: 15px;
+      color: #00ff00;
+      text-shadow: 0 0 5px #0f0;
+    }
+
+    .copy-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      word-break: break-word;
+    }
+
+    .address {
+      background: #000;
+      border: 1px solid #0f0;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 0.95em;
+      max-width: 100%;
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid #0f0;
+      color: #0f0;
+      padding: 10px 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: #0f0;
+      color: #000;
+    }
+
+    .copy-msg {
+      margin-top: 10px;
+      color: #00ff00;
+      font-size: 0.95em;
+      height: 1em;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: transparent;
+      border: 2px solid #0f0;
+      color: #0f0;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1em;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 8px #0f0 inset;
+    }
+
+    .buy-btn:hover {
+      background: #0f0;
+      color: #000;
+      box-shadow: 0 0 15px #0f0, 0 0 8px #0f0 inset;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      font-size: 1.1em;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+      border-bottom: 1px dashed #0f0;
+      padding-bottom: 5px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      color: #00ff00;
+      text-decoration: none;
+      font-size: 1em;
+      border: 1px solid #0f0;
+      padding: 10px 20px;
+      border-radius: 6px;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .social-link:hover {
+      background: #0f0;
+      color: #000;
+    }
+
+    .social-link svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      p, ul li { font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="matrix"></canvas>
+  <div class="content">
+    <img src="https://raw.githubusercontent.com/Sonyzgt/vidio/refs/heads/main/ChatGPT%20Image%2020%20Apr%202025%2C%2021.02.12.png" alt="BION Character" style="width: 300px; max-width: 100%; border: 2px solid #0f0; border-radius: 10px; box-shadow: 0 0 12px #0f0; margin-bottom: 30px;">
+    <h1>BION</h1>
+    <p>BION is a futuristic-themed memecoin inspired by cyberspace, AI, and the digital market. The character is a representation of AI living in the blockchain world, bringing technology and trends to the crypto world with a mysterious and elegant style</p>
+
+    <!-- Token Address + Buy Button -->
+    <div class="card">
+      <h2>TOKEN ADDRESS</h2>
+      <div class="copy-container">
+        <div class="address" id="tokenAddress">0xABCDEF1234567890ABCDEF1234567890ABCDEF12</div>
+        <button class="copy-btn" onclick="copyAddress()">copy</button>
+      </div>
+      <div class="copy-msg" id="copyMsg"></div>
+      <div style="margin-top: 25px;">
+        <p style="margin-bottom: 10px; font-size: 1em;">
+        <a href="https://app.uniswap.org/#/swap?outputCurrency=0xABCDEF1234567890ABCDEF1234567890ABCDEF12" target="_blank" class="buy-btn">Buy on Uniswap</a>
+      </div>
+    </div>
+
+    <!-- Tokenomics -->
+    <div class="card">
+      <h2>Tokenomics</h2>
+      <ul>
+        <li><strong>Initial Liquidity:</strong> 800M (80%)</li>
+        <li><strong>Creator Allocation:</strong> 200M (20%) vesting 18 month</li>
+        <li><strong>Total Supply:</strong> 1,000,000,000</li>
+      </ul>
+    </div>
+
+    <!-- Social Media -->
+    <div class="card">
+      <h2>Follow Us</h2>
+      <div class="social-links">
+        <a href="https://t.me/bionchat" target="_blank" class="social-link">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M9.993 16.202l-.39 3.886c.557 0 .797-.239 1.091-.527l2.614-2.475 5.418 3.938c.992.547 1.7.26 1.953-.916l3.542-16.695c.314-1.457-.524-2.034-1.473-1.675L.828 9.207C-.584 9.748-.576 10.55.623 10.932l5.416 1.692L18.478 4.85c.584-.374 1.118-.168.68.205L9.993 16.202z"/></svg>
+          Telegram
+        </a>
+        <a href="https://twitter.com/yourtwitter" target="_blank" class="social-link">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M24 4.557a9.93 9.93 0 01-2.828.775A4.932 4.932 0 0023.337 3.1a9.864 9.864 0 01-3.127 1.184A4.916 4.916 0 0016.616.64c-2.733 0-4.946 2.215-4.946 4.945 0 .388.044.764.127 1.125C7.728 6.538 4.1 4.524 1.671 1.149a4.921 4.921 0 00-.666 2.482c0 1.71.87 3.215 2.188 4.099A4.904 4.904 0 01.96 7.14v.062c0 2.388 1.7 4.384 3.946 4.837a4.936 4.936 0 01-2.224.084 4.935 4.935 0 004.604 3.417 9.867 9.867 0 01-6.102 2.103c-.397 0-.79-.023-1.177-.068a13.945 13.945 0 007.548 2.211c9.057 0 14.01-7.504 14.01-14.01 0-.213-.005-.426-.014-.637A9.975 9.975 0 0024 4.557z"/></svg>
+          Twitter
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = 'アァイィウヴエカガキギクグケゲコゴサザABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.split('');
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+
+    window.addEventListener('resize', () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
+
+    function copyAddress() {
+      const address = document.getElementById("tokenAddress").innerText;
+      navigator.clipboard.writeText(address).then(() => {
+        const msg = document.getElementById("copyMsg");
+        msg.textContent = "COPY";
+        setTimeout(() => {
+          msg.textContent = "";
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
